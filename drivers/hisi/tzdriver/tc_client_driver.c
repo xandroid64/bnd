@@ -2680,6 +2680,7 @@ static int tc_client_open(struct inode *inode, struct file *file)
 	TC_NS_DEV_File *dev = NULL;
 
 	ret = check_process_access(current, NON_HIDL_SIDE);
+#if 0
 	if (ret) {
 		TCERR(KERN_ERR "teecd service may be exploited 0x%x\n", ret);
 		return -EPERM;
@@ -2695,6 +2696,7 @@ static int tc_client_open(struct inode *inode, struct file *file)
 			return -EFAULT;
 		}
 	}
+#endif
 
 	if (!g_teecd_task) {
 		g_teecd_task = current->group_leader;

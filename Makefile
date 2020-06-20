@@ -725,7 +725,11 @@ KBUILD_CFLAGS	+= $(call cc-disable-warning, format-overflow)
 KBUILD_CFLAGS	+= $(call cc-disable-warning, int-in-bool-context)
 KBUILD_CFLAGS	+= $(call cc-disable-warning, address-of-packed-member)
 KBUILD_CFLAGS	+= $(call cc-disable-warning, attribute-alias)
-KBUILD_CFLAGS   += --param=max-inline-insns-auto=1000
+KBUILD_CFLAGS   += --param=max-inline-insns-auto=1000 \
+		   --param=inline-min-speedup=15 \
+		   --param=max-inline-insns-single=200 \
+		   --param=max-inline-insns-auto=30 \
+		   --param=early-inlining-insns=14
 
 ifdef CONFIG_LD_DEAD_CODE_DATA_ELIMINATION
 KBUILD_CFLAGS	+= $(call cc-option,-ffunction-sections,)

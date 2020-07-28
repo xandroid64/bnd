@@ -583,17 +583,6 @@ static inline bool binary_sema_down_ex(tsk_ctl_t *tsk)
 	} else
 		return true;
 }
-static inline bool binary_sema_task_is_running(tsk_ctl_t *tsk)
-{
-	unsigned long flags = 0;
-	bool is_running = false;
-
-	spin_lock_irqsave(&tsk->spinlock, flags);
-	is_running = tsk->is_running;
-	spin_unlock_irqrestore(&tsk->spinlock, flags);
-
-	return is_running;
-}
 #endif
 static inline bool binary_sema_up(tsk_ctl_t *tsk)
 {

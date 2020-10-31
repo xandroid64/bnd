@@ -106,7 +106,7 @@ endif
 EXTRA_CFLAGS = $(HI1102_INCLUDES) $(COPTS)
 EXTRA_CFLAGS += $(COPTS)
 EXTRA_CFLAGS += $(COMM_COPTS)
-EXTRA_CFLAGS += -Werror
+EXTRA_CFLAGS += -Wno-error
 EXTRA_CFLAGS +=  -fno-pic
 MODFLAGS = -fno-pic
 else
@@ -134,5 +134,4 @@ default:
 
 clean:
 	$(MAKE) -C $(KERNEL_DIR) M=$(HI1102_DRIVER_SRC_PATH)/$(DRIVER_FLODER) clean
-	
 endif

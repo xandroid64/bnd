@@ -1032,7 +1032,7 @@ KBUILD_CFLAGS   += $(call cc-option,-Werror=strict-prototypes)
 
 ifneq ($(strip $(clang)), true)
 # enforce correct pointer usage
-KBUILD_CFLAGS   += $(call cc-option,-Werror=incompatible-pointer-types)
+KBUILD_CFLAGS   += $(call cc-option,-Wno-error=incompatible-pointer-types)
 endif
 
 # use the deterministic mode of AR if available

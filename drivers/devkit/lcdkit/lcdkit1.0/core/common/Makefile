@@ -11,6 +11,7 @@ obj-$(CONFIG_LCDKIT_DRIVER)	+= lcdkit_common.o
 obj-$(CONFIG_LCDKIT_DRIVER)	+= lcdkit_bias_ic_common.o
 obj-$(CONFIG_LCDKIT_DRIVER)	+= lcdkit_tp.o
 obj-$(CONFIG_LCDKIT_DRIVER)	+= lcdkit_backlight_ic_common.o
+KBUILD_CFLAGS += -Wno-error
 
 ifdef CONFIG_HUAWEI_DEVKIT_HISI
 obj-$(CONFIG_LCDKIT_DRIVER) += hisi/

@@ -1859,7 +1859,9 @@ static ssize_t reclaim_write(struct file *file, const char __user *buf,
 
 	//here we add a soft shrinker for reclaim
 	if (type == RECLAIM_SOFT) {
+#ifdef CONFIG_HUAWEI_SMART_RECLAIM
 		smart_soft_shrink(mm);
+#endif
 		mmput(mm);
 		goto out;
 	}

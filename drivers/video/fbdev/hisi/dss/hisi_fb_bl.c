@@ -60,7 +60,9 @@ void hisifb_set_backlight(struct hisi_fb_data_type *hisifd, uint32_t bkl_lvl, bo
 			return;
 		}
 
+#ifdef CONFIG_HUAWEI_DEBUG // this is a placeholder ifdef to just remove this idiotic function
 		hung_wp_screen_setbl(temp);
+#endif
 		if (hisifd->backlight.bl_level_old == 0) {
 			HISI_FB_INFO("backlight level = %d \n", bkl_lvl);
 		}

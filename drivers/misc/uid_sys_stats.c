@@ -1133,6 +1133,7 @@ static int blkcg_attach_tgid_notifier(struct notifier_block *self,
 	struct task_struct *notify_task = task;
 	int type = (int)val;
 	int state = 0;
+#ifdef CONFIG_HUAWEI_DEBUG // nobody in the userspace cares about logging
 	if (pid_iostats_enabled == 0 && logusertype == 0) {
 		int logusertype = get_logusertype_flag();
 		if (logusertype == BETA_USER || logusertype == OVERSEA_USER) {
@@ -1145,6 +1146,7 @@ static int blkcg_attach_tgid_notifier(struct notifier_block *self,
 		pr_err("%s: received wrong type %d, %pK\n", __func__, type, notify_task);
 		return -EINVAL;
 	}
+#endif
 	switch (type) {
 		case BLK_THROTL_TA:
 		case BLK_THROTL_FG:

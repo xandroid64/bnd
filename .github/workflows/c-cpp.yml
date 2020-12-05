@@ -15,12 +15,19 @@ jobs:
     - uses: actions/checkout@v2
     - name: toolchain
       run: git clone --depth=1 https://github.com/arter97/arm64-gcc ~/tc/
+    - name: Set build date
+      id: get-date
+      run: |
+        echo ::set-output name=date::$(/bin/date -u "+%Y%m%d")
+    - name: When is this building
+      run: |
+        echo 'Building on ${{ steps.get-date.outputs.date }}'
     - name: configure
       run: make O=out ARCH=arm64 xandroid_defconfig
     - name: make
       run: make O=out ARCH=arm64 CROSS_COMPILE=~/tc/bin/aarch64-elf- -j$(nproc --all)
     - name: bootimage
-      run: ./tools/mkbootimg --kernel out/arch/arm64/boot/Image.gz --base 0x00400000 --cmdline "loglevel=4 coherent_pool=512K page_tracker=on slub_min_objects=12 unmovable_isolate1=2:192M,3:224M,4:256M printktimer=0xfff0a000,0x534,0x538 androidboot.selinux=enforcing buildvariant=user" --tags_offset 0x07A00000 --kernel_offset 0x00080000 --ramdisk_offset 0x10000000 --os_version 9 --os_patch_level 2020-06-01  --output xandroid-kramel-$(date +%d%m%y-%S%M).img
+      run: ./tools/mkbootimg --kernel out/arch/arm64/boot/Image.gz --base 0x00400000 --cmdline "loglevel=4 coherent_pool=512K page_tracker=on slub_min_objects=12 unmovable_isolate1=2:192M,3:224M,4:256M printktimer=0xfff0a000,0x534,0x538 androidboot.selinux=enforcing buildvariant=user" --tags_offset 0x07A00000 --kernel_offset 0x00080000 --ramdisk_offset 0x10000000 --os_version 9 --os_patch_level 2020-06-01  --output xandroid-kramel-${{ steps.get-date.outputs.date }}.img
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -31,3 +38,13 @@ jobs:
          release_name: Release ${{ github.ref }}
          draft: true
          prerelease: true
+    - name: Upload Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./xandroid-kramel-${{ steps.get-date.outputs.date }}.img
+        asset_name: xandroid-kramel-${{ steps.get-date.outputs.date }}.img
+        asset_content_type: application/img

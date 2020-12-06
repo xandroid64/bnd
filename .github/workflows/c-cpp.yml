@@ -1,10 +1,6 @@
 name: C/C++ CI
 
-on:
-  push:
-    branches: [ slmk ]
-  pull_request:
-    branches: [ slmk ]
+on: [push, pull_request]
 
 jobs:
   build:
